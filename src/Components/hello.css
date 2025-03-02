@@ -1,0 +1,121 @@
+.navs{
+    gap:40px;}
+
+@media (min-width: 768px) and (max-width: 1020px) {
+    .search{
+        width:370px;
+    }
+   .navs{
+    gap:20px;
+   }
+   .hamburger{
+    display: block;
+   }
+   .noham{
+    display: none;
+   }
+   
+}
+@media (min-width: 950px) and (max-width: 1058px) {
+    .search{
+        width:280px;
+    }
+}
+@media (min-width: 768px) and (max-width: 950px) {
+    .search{
+        width:150px;
+    }
+    .login{
+        width:100px;
+    }
+}
+@media (min-width: 1020px) and (max-width: 1155px) {
+    .nav2 li{
+        font-size: 13px;
+    }
+.nav2 img{
+    width:50px;
+    height: 50px;
+}
+.nav2 h1,.nav2 span{
+    font-size: 14px;
+}
+}
+@media (min-width: 540px) and (max-width: 780px) {
+.searchmb{
+    width:250px;
+    margin-left: -45px;
+}
+.loginmb{
+    width:170px;
+}
+
+
+}
+@media (min-width: 620px) and (max-width: 1200px) {
+    .img{
+        margin: 0;
+    }
+}
+@media (min-width: 780px) and (max-width: 905px) {
+   
+    .section1{
+        gap:50px;
+    }
+  
+
+}
+@media (min-width:600px) and (max-width: 750px) {
+.section1 p,h1{
+    width:500px;
+    
+    /* margin-left: 50px; */
+}
+.section1 p{
+
+}
+.section1 img{
+    margin: auto;
+}
+}
+@media  (max-width: 786px) {
+    .section1 {
+      flex-direction: column !important;
+      
+    }
+   
+   .h1{
+    margin-top: 40px;
+   }
+  
+  }
+  .li::after{
+    content:"";
+    position: absolute;
+    left:0;
+    bottom: 0;
+    width:0%;
+    height: 2px;
+    background-color: #A53860;
+    transition:width 0.3s ease ;
+  }
+  .li:hover::after {
+    width: 100%; 
+  }
+@media  (min-width: 1020px) {
+    .logo{
+        display:none
+    }
+}
+.hamburger{
+    
+}
+@media  (max-width: 767px) {
+    .hammenu{
+        margin-top: 125px;
+       }
+
+}
+
+
+

@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+  /* font-family: 'Poppins'; */
+}
+
+.shadow-combined {
+    box-shadow: 
+      10px 0 15px -5px rgba(165, 56, 96, 0.8), 
+      -20px 0 60px -15px rgba(255, 255, 255, 0.8); 
+  }
+
+.nav-link {
+    position: relative;
+    padding-bottom: 5px; /* Space between text and underline */
+    z-index: 900;
+  }
+  .nav-link::after{
+    content:"";
+    position: absolute;
+    left:0;
+    bottom: 0;
+    width:0%;
+    height: 2px;
+    background-color: #A53860;
+    transition:width 0.3s ease ;
+  }
+
+
+
+  .nav-link:hover::after {
+    width: 100%; 
+  }
+  
+  
+  
