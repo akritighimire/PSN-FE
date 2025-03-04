@@ -1,14 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import background from "../assets/HomeImage/Bg.png";
-// import JrrmcSearchModal from "../Components/JRRMC Components/JrrmcSearchModal";
 
 const RegisterDr = () => {
-  const [JrrmcSearchModal, setJrrmcSearchModal] = useState(false);
-  // const [JrrmcSearchInput, setJrrmcSearchInput] = useState(null);
-
-  const closeJrrmSearchModal = () => {
-    setJrrmcSearchModal(false);
-  };
+  const [JrrmcSearchInput, setJrrmcSearchInput] = useState(""); // Capture search input value
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,8 +19,6 @@ const RegisterDr = () => {
     specialization: "",
     phoneNumber: "",
   });
-
-  const [message, setMessage] = useState("");
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -60,7 +55,7 @@ const RegisterDr = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setMessage(` Doctor registered successfully! ID: ${data.id} `);
+        setMessage(`Doctor registered successfully! ID: ${data.id}`);
       } else {
         const data = await response.json();
         setMessage(`Error: ${data.message}`);
@@ -68,6 +63,59 @@ const RegisterDr = () => {
     } catch (error) {
       console.error("Error:", error);
       setMessage("Failed to register doctor");
+    }
+  };
+
+  // Handle search functionality with redirection
+  const handleSearch = async () => {
+    if (JrrmcSearchInput.trim() === "") {
+      setMessage("Please enter a valid search query");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/jrrm/doctors/search?query=${JrrmcSearchInput}`
+      );
+      console.log("JrrmSearchInput samma");
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Check if any data is returned
+        if (data && Array.isArray(data)) {
+          // Filter the data based on the search query
+          const filteredDoctor = data.find(
+            (doctor) =>
+              doctor.fullName
+                .toLowerCase()
+                .includes(JrrmcSearchInput.toLowerCase()) ||
+              doctor.specialization
+                .toLowerCase()
+                .includes(JrrmcSearchInput.toLowerCase()) ||
+              doctor.nmcNumber.includes(JrrmcSearchInput) ||
+              doctor.batch.includes(JrrmcSearchInput) ||
+              doctor.workingPlace
+                .toLowerCase()
+                .includes(JrrmcSearchInput.toLowerCase())
+          );
+          // If a matching doctor is found, navigate to their profile
+          if (filteredDoctor) {
+            // navigate(`/jrrmc-dr-profile/${filteredDoctor.id}`); // Redirect to the doctor's profile page with the ID
+            navigate(`/jrrmc-dr-profile/${JrrmcSearchInput}`); // where searchTerm is the term entered by the user
+          } else {
+            setMessage("No doctor found matching the search query");
+          }
+        } else {
+          setMessage("Error: No data returned from the server");
+        }
+      } else {
+        const data = await response.json();
+        setMessage(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setMessage("Failed to perform search");
     }
   };
 
@@ -81,7 +129,7 @@ const RegisterDr = () => {
         <div className="flex justify-between w-full">
           <div className="relative max-w-2xl mx-auto p-6">
             <h2 className="text-2xl font-bold mb-6 text-center text-white">
-              Register as JRRMC Alumini
+              Register as JRRMC Alumni
             </h2>
             <form onSubmit={handleSubmit} className="flex flex-wrap gap-8">
               {/* Full Name */}
@@ -237,21 +285,21 @@ const RegisterDr = () => {
 
           {/* Search Field */}
           <div className="relative">
+            <div className="my-7 text-lg font-bold">
+              Search for JRRMC alumni by name, specialization, NMC number,
+              batch, or current place of employment.
+            </div>
             <input
               type="search"
               placeholder="Search Alumni"
-              className="h-8 px-4 py-2 focus:outline-none bg-white text-black rounded-lg mr-4"
-              onFocus={() => setJrrmcSearchModal(true)}
-              // onChange={(e) => setJrrmcSearchInput(e.target.value)}
+              className="px-4 py-2 rounded-lg text-black"
+              value={JrrmcSearchInput}
+              onChange={(e) => setJrrmcSearchInput(e.target.value)}
             />
-            {JrrmcSearchModal && (
-              <JrrmcSearchModal
-                closeJrrmSearchModal={closeJrrmSearchModal}
-                JrrmcSearchInput={JrrmcSearchModal}
-              />
-            )}
-            <button className="bg-primary py-1 px-6 rounded-lg">
-              {/* {jrrmSearchModal && JrrmcSearchModal } */}
+            <button
+              onClick={handleSearch}
+              className="px-4 py-2 bg-secondary hover:bg-primary rounded-lg ml-2"
+            >
               Search
             </button>
           </div>

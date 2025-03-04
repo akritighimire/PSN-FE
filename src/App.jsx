@@ -24,6 +24,8 @@ import AddAppointmentForm from "./Pages/admin/adminAddAppointment";
 import AdminViewReports from "./Pages/admin/adminViewReports";
 import LabAdmin from "./Pages/admin/adminLab";
 import JrrmcDoctorList from "./Pages/admin/JrrmcDoctorList";
+import JrrmcDoctorProfile from "./Pages/website/JrrmcDoctorProfile";
+// import DoctorProfile from "./Pages/website/JrrmcDoctorProfile";
 
 const App = () => {
   return (
@@ -216,7 +218,34 @@ const App = () => {
               </>
             }
           ></Route>
-          <Route path="/admin-jrrmcdoctor-list" element={<><JrrmcDoctorList/></>}></Route>
+          {/* <Route
+            path="/jrrmc-dr-profile/:id"
+            element={
+              <>
+                <Navbar />
+                <JrrmcDoctorProfile />
+                <Footer />
+              </>
+            }
+          ></Route> */}
+
+          <Route path="/jrrmc-dr-profile/:searchQuery" element={
+            <>
+              <Navbar/>
+              <JrrmcDoctorProfile/>
+              <Footer/>
+            </>
+          } />
+
+
+          <Route
+            path="/admin-jrrmcdoctor-list"
+            element={
+              <>
+                <JrrmcDoctorList />
+              </>
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
       {/* <Home/> */}
