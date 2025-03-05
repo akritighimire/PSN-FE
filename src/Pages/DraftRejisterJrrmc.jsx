@@ -1,3 +1,6 @@
+
+
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import background from "../assets/HomeImage/Bg.png";
@@ -6,11 +9,6 @@ const RegisterDr = () => {
   const [JrrmcSearchInput, setJrrmcSearchInput] = useState(""); // Capture search input value
   const [message, setMessage] = useState("");
   const navigate = useNavigate(); // Initialize useNavigate
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add login state
-  const [loginData, setLoginData] = useState({
-    username: "",
-    password: "",
-  });
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -24,12 +22,6 @@ const RegisterDr = () => {
     specialization: "",
     phoneNumber: "",
   });
-
-  // Handle login input changes
-  const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData({ ...loginData, [name]: value });
-  };
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -46,19 +38,6 @@ const RegisterDr = () => {
       ...formData,
       photo: e.target.files[0],
     });
-  };
-
-  // Handle login submission
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    const { username, password } = loginData;
-
-    if (username === "jrrmc-alumni" && password === "jrrmc55") {
-      setIsLoggedIn(true); // Successful login
-      setMessage("Login successful");
-    } else {
-      setMessage("Invalid username or password");
-    }
   };
 
   // Handle form submission
@@ -308,77 +287,24 @@ const RegisterDr = () => {
           </div>
 
           {/* Search Field */}
-          <div className="relative max-w-2xl mx-auto p-6">
-            {isLoggedIn ? (
-              <>
-                {/* Search Field */}
-                <div className="relative">
-                  <div className="my-7 text-lg font-bold">
-                    Search for JRRMC alumni by name, specialization, NMC number,
-                    batch, or current place of employment.
-                  </div>
-                  <input
-                    type="search"
-                    placeholder="Search Alumni"
-                    className="px-4 py-2 rounded-lg text-black"
-                    value={JrrmcSearchInput}
-                    onChange={(e) => setJrrmcSearchInput(e.target.value)}
-                  />
-                  <button
-                    onClick={handleSearch}
-                    className="px-4 py-2 bg-secondary hover:bg-primary rounded-lg ml-2"
-                  >
-                    Search
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                {/* Login Form */}
-                <form
-                  onSubmit={handleLoginSubmit}
-                  className="flex flex-wrap justify-between"
-                >
-                  <h2 className="text-md font-bold mb-6 text-white">
-                    Please fill out the form with your username and password to
-                    search JRRMC alumni.
-                  </h2>
-                  {/* Username */}
-                  <div className="mb-4">
-                    <input
-                      placeholder="Username"
-                      type="text"
-                      name="username"
-                      value={loginData.username}
-                      onChange={handleLoginChange}
-                      className="px-4 py-2 w-[200px] focus:outline-none bg-transparent border-b-2 rounded-lg"
-                      required
-                    />
-                  </div>
-
-                  {/* Password */}
-                  <div className="mb-4">
-                    <input
-                      placeholder="Password"
-                      type="password"
-                      name="password"
-                      value={loginData.password}
-                      onChange={handleLoginChange}
-                      className="px-4 w-[200px] py-2 focus:outline-none bg-transparent border-b-2 rounded-lg"
-                      required
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary hover:text-black transition duration-300"
-                  >
-                    Login
-                  </button>
-                </form>
-                {message && <p>{message}</p>}
-              </>
-            )}
+          <div className="relative">
+            <div className="my-7 text-lg font-bold">
+              Search for JRRMC alumni by name, specialization, NMC number,
+              batch, or current place of employment.
+            </div>
+            <input
+              type="search"
+              placeholder="Search Alumni"
+              className="px-4 py-2 rounded-lg text-black"
+              value={JrrmcSearchInput}
+              onChange={(e) => setJrrmcSearchInput(e.target.value)}
+            />
+            <button
+              onClick={handleSearch}
+              className="px-4 py-2 bg-secondary hover:bg-primary rounded-lg ml-2"
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>
@@ -387,3 +313,6 @@ const RegisterDr = () => {
 };
 
 export default RegisterDr;
+
+
+

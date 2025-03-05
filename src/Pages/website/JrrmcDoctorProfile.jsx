@@ -11,7 +11,7 @@ const JrrmcDoctorProfile = () => {
   useEffect(() => {
     console.log("Search Query:", searchQuery); // Log the search query for debugging
     axios
-      .get(`/api/jrrm/doctors/search?query=${searchQuery}`) // Send the search query to the backend
+      .get(`http://localhost:3000/api/jrrm/doctors/search?query=${searchQuery}`) // Send the search query to the backend
       .then((response) => {
         console.log("Response Data:", response.data); // Log the response data
         if (Array.isArray(response.data)) {
@@ -37,11 +37,7 @@ const JrrmcDoctorProfile = () => {
   }
 
   if (error) {
-    return (
-      <div className="text-center text-red-500">
-        {error}
-      </div>
-    );
+    return <div className="text-center text-red-500">{error}</div>;
   }
 
   if (doctors.length === 0) {
@@ -53,28 +49,58 @@ const JrrmcDoctorProfile = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="max-w-7xl mx-auto mt-10">
+      <div className="">
         {doctors.map((doctor) => (
-          <div key={doctor._id} className="bg-white p-8 rounded-lg shadow-lg">
-            <div className="flex justify-center mb-4">
+          <div
+            key={doctor._id}
+            className="flex w-1/2 bg-white p-8 rounded-lg shadow-lg"
+          >
+            <div className=" flex mb-4">
               <img
-                className="w-64 h-64 rounded-full shadow-lg border-4 border-pink-500"
-                src={doctor.photo || "/default-image.jpg"} // Use default image if no photo
-                alt={doctor.fullName}
+                className="m-8 w-64 h-64 rounded-full shadow-lg border-4 border-pink-500"
+                src={doctor.photo} // Use default image if no photo
+                // alt={doctor.fullName}
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-              Dr. {doctor.fullName || "Name Not Available"}
-            </h1>
-            <p className="text-lg font-medium text-gray-700">Batch: {doctor.batch || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">Degree: {doctor.degree || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">Specialization: {doctor.specialization || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">NMC No: {doctor.nmcNumber || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">Work Place: {doctor.workingPlace || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">Email: {doctor.email || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">Address: {doctor.address || "Not Provided"}</p>
-            <p className="text-lg font-medium text-gray-700">Phone Number: {doctor.phoneNumber || "Not Provided"}</p>
+            <div className="">
+              <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                Dr.
+                {doctor.fullName || "Name Not Available"}
+              </h1>
+              <p className="text-lg font-medium">
+                <span className="text-lg font-bold">Batch: </span>
+                {doctor.batch || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium">
+                <span className="text-lg font-bold">Degree: </span>
+                {doctor.degree || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-bold">Specialization: </span>
+                {doctor.specialization || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-bold">NMC No: </span>
+                {doctor.nmcNumber || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-bold">Work Place: </span>
+                {doctor.workingPlace || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-bold">Email: </span>
+                {doctor.email || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-bold">Address: </span>
+                {doctor.address || "Not Provided"}
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-bold">Phone Number: </span>
+                {doctor.phoneNumber || "Not Provided"}
+              </p>
+            </div>
           </div>
         ))}
       </div>
